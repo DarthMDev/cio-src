@@ -578,7 +578,7 @@ class DistributedPlayerToonAI(DistributedToonAI, DistributedPlayerToonShared):
             self.attackers = None
             self.puInventory = None
             self.equippedPU = None
-            if type(self.backpack) != types.IntType and self.backpack is not None:
+            if type(self.backpack) != int and self.backpack is not None:
                 self.backpack.cleanup()
                 self.backpack = None
             self.quests = None

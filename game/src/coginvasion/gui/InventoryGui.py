@@ -293,7 +293,7 @@ class Slot(DirectFrame):
         self.gagLabel.hide()
 
     def setGag(self, gag):
-        if type(gag) == types.IntType:
+        if type(gag) == int:
             gag = self.gui.backpack.getGagByID(gag)
         self.ignoreAll()
         self.gag = gag
