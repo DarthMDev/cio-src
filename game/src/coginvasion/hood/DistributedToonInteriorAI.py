@@ -19,7 +19,11 @@ from src.coginvasion.hood import DistributedDoorAI
 class DistributedToonInteriorAI(DistributedObjectAI.DistributedObjectAI):
     notify = directNotify.newCategory('DistributedToonInteriorAI')
 
-    def __init__(self, air, block, doorToZone):
+    def __init__(self, air, block = None, doorToZone = None):
+        # block/doorToZone are optional: the repository reconstructs objects that
+        # enter its interest generically as classDef(air) (AstronInternalRepository
+        # .handleObjEntry), so requiring them here raised "missing N positional
+        # arguments". block is recovered from the setBlock required field.
         DistributedObjectAI.DistributedObjectAI.__init__(self, air)
         self.door = None
         self.doorToZone = doorToZone
@@ -28,6 +32,11 @@ class DistributedToonInteriorAI(DistributedObjectAI.DistributedObjectAI):
 
     def announceGenerate(self, doorType = 0):
         DistributedObjectAI.DistributedObjectAI.announceGenerate(self)
+        # Only the authoring AI (created with a doorToZone) builds the door and
+        # NPCs. A shadow instance reconstructed from the state server has no
+        # doorToZone and must not duplicate them.
+        if self.doorToZone is None:
+            return
         self.door = DistributedDoorAI.DistributedDoorAI(self.air, self.block, self.doorToZone, doorType)
         self.door.generateWithRequired(self.zoneId)
         self.createNPCs()
