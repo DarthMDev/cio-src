@@ -12,7 +12,9 @@ from direct.directnotify.DirectNotifyGlobal import directNotify
 
 from panda3d.core import Vec3
 
-from yaml import load
+# macOS port: PyYAML 5.1+ requires a Loader for load(); safe_load is the drop-in
+# replacement for trusted config data. # -- macOS port
+from yaml import safe_load as load
 
 from src.coginvasion.globals.CIGlobals import colorFromRGBScalar255
 from src.coginvasion.hood.ZoneUtil import HoodAbbr2Hood

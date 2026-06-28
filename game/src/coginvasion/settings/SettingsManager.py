@@ -281,7 +281,8 @@ class SettingsManager:
     def __updateResourcePack(self, value):
         try:
             base.loader.mountMultifiles(value)
-        except: pass
+        except:
+            import traceback; traceback.print_exc()  # macOS port: surface the real error # -- macOS port
         
     def __updateModelDetail(self, value):
         pass
