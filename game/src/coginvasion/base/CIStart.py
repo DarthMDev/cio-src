@@ -48,6 +48,11 @@ else:
     loadPrcFile('config/config_client.prc')
     
     loadPrcFileData('', 'model-path ./resources') # Don't require mounting of phases
+    # macOS port: resources are unpacked dirs (no phase_X.mf multifiles), so mount the
+    # resources directory at the VFS root. This lets raw vfs.readFile('phase_X/...') calls
+    # (e.g. the chat whitelist) resolve, matching the original .mf-mounted layout. # -- macOS port
+    from panda3d.core import VirtualFileSystem, Filename
+    VirtualFileSystem.getGlobalPtr().mount(Filename('resources'), Filename('.'), VirtualFileSystem.MFReadOnly)
     notify.info('Running Development Environment')
     
 if ConfigVariableString("threading-model", "").getValue() == "Cull/Draw":
