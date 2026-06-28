@@ -194,8 +194,8 @@ class ChatInput(StateData.StateData):
             newInput = list(chat)
             
             try:
-                chat.decode('ascii')
-            except UnicodeDecodeError:
+                chat.encode('ascii')
+            except UnicodeEncodeError:
                 # Non-ASCII characters were entered.
                 newText = ""
                 validKeys = list(string.printable[5:94])

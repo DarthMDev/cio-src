@@ -17,7 +17,8 @@ export RESOURCE_ENCRYPTION="${RESOURCE_ENCRYPTION:-cio-03-06-16_lsphases}"
 
 # Prompt for the username (default: testuser), like start_ci.bat.
 if [ -z "$ACCOUNT_NAME" ]; then
-    read "reply?Username [testuser]: "
+    printf 'Username [testuser]: '
+    read reply
     export ACCOUNT_NAME="${reply:-testuser}"
 fi
 
