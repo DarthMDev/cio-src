@@ -877,6 +877,16 @@ class CIBase(ShowBase):
         #    self.filters.delFXAA()
 
     def setHDR(self, toggle):
+        # macOS port: HDR needs the compute-shader tonemap/auto-exposure path
+        # (OpenGL 4.3+) to bring the unclamped (identity light-ramp) lighting back
+        # into range. macOS caps at GL 4.1 with no compute shaders, so that path is
+        # skipped (see CIPostProcess.setup) and the scene blows out to white. Force
+        # HDR off when compute isn't available so lighting stays clamped. # -- macOS port
+        if toggle:
+            gsg = self.win.getGsg() if self.win else None
+            if gsg is None or not gsg.getSupportsComputeShaders():
+                toggle = False
+
         self.hdrToggle = toggle
 
         #if not hasattr(self, 'hdr'):
