@@ -21,13 +21,21 @@ from direct.task.TaskManagerGlobal import *
 
 from panda3d.core import VirtualFileSystem, NodePath, GraphicsEngine
 from panda3d.core import ClockObject, TrueClock, Notify, PandaNode
-from pandac.PandaModules import getConfigShowbase
+# macOS/py3 port: getConfigShowbase() was removed from modern panda; provide a tiny compat
+# shim over ConfigVariable* (base.config.GetX is used across the AI code). # -- macOS port
+from panda3d.core import ConfigVariableDouble, ConfigVariableBool, ConfigVariableInt, ConfigVariableString
+
+class _ConfigCompat:
+	def GetFloat(self, key, default=0.0): return ConfigVariableDouble(key, default).getValue()
+	def GetBool(self, key, default=False): return ConfigVariableBool(key, default).getValue()
+	def GetInt(self, key, default=0): return ConfigVariableInt(key, default).getValue()
+	def GetString(self, key, default=""): return ConfigVariableString(key, default).getValue()
 
 class AIBase:
 	notify = directNotify.newCategory("AIBase")
 
 	def __init__(self):
-		self.config = getConfigShowbase()
+		self.config = _ConfigCompat()
 		vfs = VirtualFileSystem.getGlobalPtr()
 		self.eventMgr = eventMgr
 		self.messenger = messenger
