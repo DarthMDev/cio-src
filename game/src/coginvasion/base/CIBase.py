@@ -86,13 +86,14 @@ class CIBase(ShowBase):
                                  str(gsg.getSupports3dTexture()), 
                                  str(gsg.getSupportsComputeShaders())))
 
-        # Enable shader generation on all of the main scenes
-        if gsg.getSupportsBasicShaders() and gsg.getSupportsGlsl():
+        # Enable shader generation on all of the main scenes.
+        # macOS port: only require GLSL (getSupportsBasicShaders() means Cg, which is
+        # unavailable on Apple Silicon and unused now that shaders are GLSL).
+        if gsg.getSupportsGlsl():
             render.setShaderAuto()
             render2d.setShaderAuto()
             render2dp.setShaderAuto()
         else:
-            # I don't know how this could be possible
             self.notify.error("GLSL shaders unsupported by graphics driver.")
             return
         
@@ -624,7 +625,10 @@ class CIBase(ShowBase):
         
     def initStuff(self):
         # Precache water bar shader, prevents crash from running out of GPU registers
-        loader.loadShader("phase_14/models/shaders/progress_bar.sha")
+        # macOS port: progress_bar is now GLSL (was Cg). # -- macOS port
+        from panda3d.core import Shader as _Shader
+        _Shader.load(_Shader.SL_GLSL, "phase_14/models/shaders/progress_bar.vert.glsl",
+                     "phase_14/models/shaders/progress_bar.frag.glsl")
         
         self.bspLoader.setWantShadows(metadata.USE_REAL_SHADOWS)
         

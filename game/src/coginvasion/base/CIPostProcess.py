@@ -44,7 +44,9 @@ class CIPostProcess(PostProcess):
         
         textures = {"sceneColorSampler": self.getSceneColorTexture()}
         
-        if base.hdrToggle:
+        # macOS port: HDR auto-exposure uses a compute shader (build_histogram), which is
+        # unavailable on macOS OpenGL 4.1. Skip it when compute isn't supported. # -- macOS port
+        if base.hdrToggle and base.win.getGsg().getSupportsComputeShaders():
             self.hdr = HDREffect(self)
             self.hdr.getHdrPass().setExposureOutput(base.shaderGenerator.getExposureAdjustment())
             self.addEffect(self.hdr)

@@ -24,7 +24,10 @@ class WaterBar(NodePath):
         self.bar = OnscreenImage("phase_14/maps/frontv2.png", scale = (0.233, 1, 0.740), parent = self)
         self.setTransparency(1)
         
-        barSh = loader.loadShader("phase_14/models/shaders/progress_bar.sha")
+        # macOS port: progress_bar is now GLSL (was Cg). # -- macOS port
+        from panda3d.core import Shader
+        barSh = Shader.load(Shader.SL_GLSL, "phase_14/models/shaders/progress_bar.vert.glsl",
+                            "phase_14/models/shaders/progress_bar.frag.glsl")
         self.bar.setShader(barSh)
         self.bar.setShaderInput("tex", loader.loadTexture("phase_14/maps/frontv2.png"))
         self.bar.setShaderInput("perct", float(self.value) / float(self.range))
