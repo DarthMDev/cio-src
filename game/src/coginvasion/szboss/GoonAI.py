@@ -359,7 +359,7 @@ class GoonAI(DirectObject):
             self.currentBehavior = None
 
     def enterBehavior(self, idx, args = []):
-        if idx == GBInvalid or not self.behaviors.has_key(idx):
+        if idx == GBInvalid or idx not in self.behaviors:
             print("GoonAI: tried to enter invalid behavior ID", idx)
             return
 

@@ -92,7 +92,7 @@ def makeBulletCollFromGeoms(rootNode, exclusions = [], enableNow = True, world =
             else:
                 facetype = BSPFaceAttrib.FACETYPE_WALL
                 
-            if not type2geoms.has_key(facetype):
+            if facetype not in type2geoms:
                 type2geoms[facetype] = [(geom, state)]
             else:
                 type2geoms[facetype].append((geom, state))

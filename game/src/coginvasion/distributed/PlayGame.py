@@ -241,7 +241,7 @@ class PlayGame(StateData):
 
     def handleEnteredQuietZone(self, requestStatus):
         hoodId = requestStatus['hoodId']
-        if self.Hood2HoodClass.has_key(hoodId):
+        if hoodId in self.Hood2HoodClass:
             hoodClass = self.Hood2HoodClass[hoodId]
             base.transitions.noTransitions()
             loader.beginBulkLoad('hood', hoodId, 100)

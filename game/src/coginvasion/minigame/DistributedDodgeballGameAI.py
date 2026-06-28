@@ -63,7 +63,7 @@ class DistributedDodgeballGameAI(DistributedToonFPSGameAI, TeamMinigameAI):
 
     def __clearSnowballOwner(self, idx):
         sender = self.air.getAvatarIdFromSender()
-        if self.doId2snowballIndex.has_key(sender):
+        if sender in self.doId2snowballIndex:
             if self.doId2snowballIndex[sender] == idx:
                 del self.doId2snowballIndex[sender]
             else:

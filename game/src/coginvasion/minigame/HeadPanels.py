@@ -62,7 +62,7 @@ class HeadPanels:
 
     def updateValue(self, doId, direction):
         count = 0
-        if self.doId2Frame.has_key(doId):
+        if doId in self.doId2Frame:
             container, headframe, toon, nameLbl, valueLabel = self.doId2Frame[doId]
             if direction == 0:
                 count = int(valueLabel['text']) - 1

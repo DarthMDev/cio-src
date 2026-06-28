@@ -284,7 +284,7 @@ class TownLoader(StateData):
                 if flatwall.hasTag("DNACode") and flatwall.hasMat():
                     continue
                 block = int(flatwall.getName().split(":")[0][2:])
-                if not block2flatwall.has_key(block):
+                if block not in block2flatwall:
                     block2flatwall[block] = groupNode.attachNewNode(ModelNode('toonBuildingsBlock' + str(block)))
                 flatwall.wrtReparentTo(block2flatwall[block])
                 

@@ -447,7 +447,7 @@ class DistributedCogOfficeBattleAI(DistributedBattleZoneAI):
                 isBoss = True
                 wantBoss = False
         
-            if not guardSection2NumInSection.has_key(section):
+            if section not in guardSection2NumInSection:
                 guardSection2NumInSection[section] = 0
                 if section == 0:
                     # Always make section 0 have 4 guards.

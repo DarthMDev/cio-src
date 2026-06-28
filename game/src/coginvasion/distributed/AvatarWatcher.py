@@ -107,7 +107,7 @@ class AvatarWatcher(DirectObject):
     
     def isTrackingAvatarId(self, avId):
         """ Checks if we're currently tracking or watching the avatar id provided """
-        return (avId != None and avId in self.watchingAvatarIds and self.avId2instance.has_key(avId))
+        return (avId != None and avId in self.watchingAvatarIds and avId in self.avId2instance)
     
     def startTrackingAvatarId(self, avId):
         """ If given an avatar id not already being tracked, it will add it to
