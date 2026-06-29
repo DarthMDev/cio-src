@@ -12,7 +12,7 @@ from direct.distributed.DistributedObjectAI import DistributedObjectAI
 
 class DistributedTreasureAI(DistributedObjectAI):
 
-    def __init__(self, air, treasurePlanner, x, y, z):
+    def __init__(self, air, treasurePlanner = None, x = 0, y = 0, z = 0):
         DistributedObjectAI.__init__(self, air)
         self.treasurePlanner = treasurePlanner
         self.pos = x, y, z
